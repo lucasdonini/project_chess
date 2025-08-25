@@ -32,4 +32,9 @@ public class Pawn extends Piece {
 
         return squares;
     }
+
+    @Override
+    public String toString() {
+        return isWhite ? "W" : "B";
+    }
 }

@@ -37,4 +37,9 @@ public class King extends Piece {
 
         return possibleFinalSqares;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%cK", isWhite ? 'W' : 'B');
+    }
 }

@@ -17,4 +17,9 @@ public class Queen extends Piece {
 
         return squares.stream().distinct().toList();
     }
+
+    @Override
+    public String toString() {
+        return String.format("%cQ", isWhite ? 'W' : 'B');
+    }
 }

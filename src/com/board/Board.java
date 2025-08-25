@@ -62,4 +62,26 @@ public class Board {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (Square[] row : squares) {
+            for (Square sq : row) {
+                Piece p = sq.getPiece();
+
+                if (p == null) {
+                    sb.append("  -  ");
+                    continue;
+                }
+
+                String text = String.format(" %3s ", p);
+                sb.append(text);
+            }
+            sb.append('\n');
+        }
+
+        return sb.toString();
+    }
 }

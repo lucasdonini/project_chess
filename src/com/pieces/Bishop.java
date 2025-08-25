@@ -29,4 +29,9 @@ public class Bishop extends Piece {
 
         return squares;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%cB", isWhite ? 'W' : 'B');
+    }
 }

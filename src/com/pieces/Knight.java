@@ -32,4 +32,9 @@ public class Knight extends Piece {
 
         return squares.stream().distinct().toList();
     }
+
+    @Override
+    public String toString() {
+        return String.format("%cN", isWhite ? 'W' : 'B');
+    }
 }
