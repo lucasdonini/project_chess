@@ -92,6 +92,33 @@ public abstract class Piece {
         return rook(square, false);
     }
 
+    // === BISHOP ===
+    private static Bishop bishop(String square, boolean isWhite) {
+        if (!SquareUtils.isValid(square)) {
+            throw new IllegalArgumentException("Invalid square name");
+        }
+
+        Coordinate position = SquareUtils.getCoordinate(square);
+
+        return new Bishop(true, position.row(), position.col());
+    }
+
+    public static Bishop whiteBishop(String square) {
+        if (!whiteBishopSquares.contains(square)) {
+            throw new IllegalArgumentException("Invalid initial white bishop square");
+        }
+
+        return bishop(square, true);
+    }
+
+    public static Bishop blackBishop(String square) {
+        if (!blackBishopSquares.contains(square)) {
+            throw new IllegalArgumentException("Invalid initial black bishop square");
+        }
+
+        return bishop(square, false);
+    }
+
     // Other methods
     public boolean isWhitePiece() {
         return isWhite;

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SquareUtils {
     public static String getName(int row, int col) {
-        if (row < 0 || col < 0 || row > 7 || col > 7) {
+        if (!isValid(row, col)) {
             throw new IllegalArgumentException("Invalid coordinates");
         }
 
@@ -43,5 +43,13 @@ public class SquareUtils {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public static boolean isValid(int row, int col) {
+        return row >= 0 && row <= 7 && col >= 0 && col <= 7;
+    }
+
+    public static boolean isValid(Coordinate coordinate) {
+        return isValid(coordinate.row(), coordinate.col());
     }
 }

@@ -13,4 +13,7 @@ public class PiecePositioningUtils {
     public static final List<String> blackPawnSquares = List.of("a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7");
     public static final int whitePawnInitialRow = 6;
     public static final int blackPawnInitialRow = 1;
+
+    public static final List<String> whiteBishopSquares = List.of("c1", "f1");
+    public static final List<String> blackBishopSquares = List.of("c8", "f8");
 }

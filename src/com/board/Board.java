@@ -49,6 +49,8 @@ public class Board {
                 else if (blackPawnSquares.contains(name)) square.setPiece(Piece.blackPawn(name));
                 else if (whiteRookSquares.contains(name)) square.setPiece(Piece.whiteRook(name));
                 else if (blackRookSquares.contains(name)) square.setPiece(Piece.blackRook(name));
+                else if (whiteBishopSquares.contains(name)) square.setPiece(Piece.whiteBishop(name));
+                else if (blackBishopSquares.contains(name)) square.setPiece(Piece.blackBishop(name));
             }
         }
     }
