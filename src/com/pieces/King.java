@@ -3,7 +3,7 @@ package com.pieces;
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.SquareUtils.getSquareName;
+import static utils.SquareUtils.getName;
 
 public class King extends Piece {
     protected King(boolean isWhite, int row, int col) {
@@ -30,7 +30,7 @@ public class King extends Piece {
                     continue;
                 }
 
-                String square = getSquareName(fRow, fCol);
+                String square = getName(fRow, fCol);
                 possibleFinalSqares.add(square);
             }
         }

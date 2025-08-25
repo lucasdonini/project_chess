@@ -5,7 +5,7 @@ import utils.SquareUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.SquareUtils.getSquareName;
+import static utils.SquareUtils.getName;
 
 public class Pawn extends Piece {
     private final int originalRow;
@@ -23,11 +23,11 @@ public class Pawn extends Piece {
         List<String> squares = new ArrayList<>();
 
         if (row == originalRow) {
-            squares.add(getSquareName(row + 2 * dRow, col));
+            squares.add(getName(row + 2 * dRow, col));
         }
 
-        if (SquareUtils.isValid(getSquareName(row + dRow, col))) {
-            squares.add(getSquareName(row + dRow, col));
+        if (SquareUtils.isValid(getName(row + dRow, col))) {
+            squares.add(getName(row + dRow, col));
         }
 
         return squares;
