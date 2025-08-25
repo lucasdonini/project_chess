@@ -6,6 +6,9 @@ public class PiecePositioningUtils {
     public static final List<String> whiteRookSquares = List.of("a1", "h1");
     public static final List<String> blackRookSquares = List.of("a8", "h8");
 
+    public static final List<String> whiteKnightSquares = List.of("b1", "g1");
+    public static final List<String> blackKnightSquares = List.of("b8", "g8");
+
     public static final List<String> whiteBishopSquares = List.of("c1", "f1");
     public static final List<String> blackBishopSquares = List.of("c8", "f8");
 

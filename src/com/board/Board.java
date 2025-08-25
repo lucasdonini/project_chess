@@ -46,6 +46,8 @@ public class Board {
 
                 if (whiteRookSquares.contains(squareName)) piece = Piece.whiteRook(squareName);
                 else if (blackRookSquares.contains(squareName)) piece = Piece.blackRook(squareName);
+                else if (whiteKnightSquares.contains(squareName)) piece = Piece.whiteKnight(squareName);
+                else if (blackKnightSquares.contains(squareName)) piece = Piece.blackKnight(squareName);
                 else if (whiteBishopSquares.contains(squareName)) piece = Piece.whiteBishop(squareName);
                 else if (blackBishopSquares.contains(squareName)) piece = Piece.blackBishop(squareName);
                 else if (whiteQueenSquare.equals(squareName)) piece = Piece.whiteQueen();
