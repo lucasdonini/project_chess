@@ -41,15 +41,9 @@ public class Game {
 
         for (String squareName : possibleMoves) {
             Square square = board.getSquare(squareName);
-
-            if (square.isFree()) {
-                result.add(squareName);
-                continue;
-            }
-
             Piece destination = square.getPiece();
 
-            if (!destination.belongsTo(player)) {
+            if (destination == null || !destination.belongsTo(player)) {
                 result.add(squareName);
             }
         }
