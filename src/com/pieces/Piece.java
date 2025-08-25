@@ -3,6 +3,8 @@ package com.pieces;
 import utils.Coordinate;
 import utils.SquareUtils;
 
+import static utils.PiecePositioningUtils.*;
+
 import java.util.List;
 
 public abstract class Piece {
@@ -25,19 +27,23 @@ public abstract class Piece {
 
         Coordinate position = SquareUtils.getCoordinate(square);
 
-        if (position.row() != initialRow) {
-            throw new IllegalArgumentException("Invalid initial pawn position");
-        }
-
         return new Pawn(isWhite, position.row(), position.col());
     }
 
     public static Pawn whitePawn(String square) {
-        return pawn(square, true, 6);
+        if (!whitePawnSquares.contains(square)) {
+            throw new IllegalArgumentException("Invalid initial white pawn position");
+        }
+
+        return pawn(square, true, whitePawnInitialRow);
     }
 
     public static Pawn blackPawn(String square) {
-        return pawn(square, false, 1);
+        if (!blackPawnSquares.contains(square)) {
+            throw new IllegalArgumentException("Invalid initial black pawn position");
+        }
+
+        return pawn(square, false, blackPawnInitialRow);
     }
 
     // === KING ===
@@ -52,13 +58,41 @@ public abstract class Piece {
     }
 
     public static King whiteKing() {
-        return king("e1", true);
+        return king(whiteKingSquare, true);
     }
 
     public static King blackKing() {
-        return king("e8", false);
+        return king(blackKingSquare, false);
     }
 
+    // === ROOK ===
+    private static Rook rook(String square, boolean isWhite) {
+        if (!SquareUtils.isValid(square)) {
+            throw new IllegalArgumentException("Invalid square");
+        }
+
+        Coordinate position = SquareUtils.getCoordinate(square);
+
+        return new Rook(isWhite, position.row(), position.col());
+    }
+
+    public static Rook whiteRook(String square) {
+        if (!whiteRookSquares.contains(square)) {
+            throw new IllegalArgumentException("Invalid initial white rook position");
+        }
+
+        return rook(square, true);
+    }
+
+    public static Rook blackRook(String square) {
+        if (!blackRookSquares.contains(square)) {
+            throw new IllegalArgumentException("Invalid initial black rook position");
+        }
+
+        return rook(square, false);
+    }
+
+    // Other methods
     public boolean isWhitePiece() {
         return isWhite;
     }

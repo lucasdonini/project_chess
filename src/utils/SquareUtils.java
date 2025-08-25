@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.List;
+
 public class SquareUtils {
     public static String getName(int row, int col) {
         if (row < 0 || col < 0 || row > 7 || col > 7) {

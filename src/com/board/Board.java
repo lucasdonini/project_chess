@@ -4,6 +4,8 @@ import com.pieces.Piece;
 import utils.Coordinate;
 import utils.SquareUtils;
 
+import static utils.PiecePositioningUtils.*;
+
 public class Board {
     private final Square[][] squares = new Square[8][8];
 
@@ -41,12 +43,12 @@ public class Board {
             for (Square square : line) {
                 String name = square.getName();
 
-                switch (name) {
-                    case "e1" -> square.setPiece(Piece.whiteKing());
-                    case "e8" -> square.setPiece(Piece.blackKing());
-                    case "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2" -> square.setPiece(Piece.whitePawn(name));
-                    case "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7" -> square.setPiece(Piece.blackPawn(name));
-                }
+                if (whiteKingSquare.equals(name)) square.setPiece(Piece.whiteKing());
+                else if (blackKingSquare.equals(name)) square.setPiece(Piece.blackKing());
+                else if (whitePawnSquares.contains(name)) square.setPiece(Piece.whitePawn(name));
+                else if (blackPawnSquares.contains(name)) square.setPiece(Piece.blackPawn(name));
+                else if (whiteRookSquares.contains(name)) square.setPiece(Piece.whiteRook(name));
+                else if (blackRookSquares.contains(name)) square.setPiece(Piece.blackRook(name));
             }
         }
     }
