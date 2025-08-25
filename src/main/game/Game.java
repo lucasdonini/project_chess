@@ -1,8 +1,8 @@
-package com.game;
+package main.game;
 
-import com.board.Board;
-import com.board.Square;
-import com.pieces.Piece;
+import main.board.Board;
+import main.board.Square;
+import main.pieces.Piece;
 import exception.EmptySelectionException;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class Game {
         turnCount = 1;
     }
 
-    private List<String> getPossibleDestinations(String selectedSquare) throws EmptySelectionException {
+    private List<String> getPossibleDestinations(String selectedSquare) {
         List<String> result = new ArrayList<>();
         Piece piece = board.getPiece(selectedSquare);
 
@@ -51,7 +51,7 @@ public class Game {
         return result;
     }
 
-    public void move(String originSquareName, String destinationSquareName) throws EmptySelectionException, IllegalStateException {
+    public void move(String originSquareName, String destinationSquareName) {
         Square origin = board.getSquare(originSquareName);
         Square destination = board.getSquare(destinationSquareName);
 
@@ -71,6 +71,6 @@ public class Game {
 
     @Override
     public String toString() {
-        return board.toString();
+        return String.format("%s\n\nCurrent Player: %s\n", board, player);
     }
 }

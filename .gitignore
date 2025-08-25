@@ -29,4 +29,4 @@ bin/
 .DS_Store
 
 ### Project ###
-src/com/Tests.java
+src/main/Tests.java

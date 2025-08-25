@@ -1,4 +1,4 @@
-package com.pieces;
+package main.pieces;
 
 import java.util.ArrayList;
 import java.util.List;

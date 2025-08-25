@@ -1,4 +1,4 @@
-package com.pieces;
+package main.pieces;
 
 import utils.Coordinate;
 import utils.SquareUtils;

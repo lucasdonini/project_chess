@@ -1,6 +1,6 @@
-package com.pieces;
+package main.pieces;
 
-import com.game.Player;
+import main.game.Player;
 import utils.Coordinate;
 import utils.SquareUtils;
 

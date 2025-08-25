@@ -1,6 +1,6 @@
-package com.board;
+package main.board;
 
-import com.pieces.Piece;
+import main.pieces.Piece;
 import utils.Coordinate;
 import utils.SquareUtils;
 

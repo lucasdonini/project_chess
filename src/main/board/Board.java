@@ -1,11 +1,8 @@
-package com.board;
+package main.board;
 
-import com.pieces.Piece;
-import exception.EmptySelectionException;
+import main.pieces.Piece;
 import utils.Coordinate;
 import utils.SquareUtils;
-
-import java.util.List;
 
 import static utils.PiecePositioningUtils.*;
 
