@@ -29,6 +29,10 @@ public class Game {
         turnCount = 1;
     }
 
+    public void nextTurn() {
+        player = player.opposite();
+    }
+
     private List<String> getPossibleDestinations(String selectedSquare) {
         List<String> result = new ArrayList<>();
         Piece piece = board.getPiece(selectedSquare);
@@ -65,6 +69,7 @@ public class Game {
             throw new IllegalStateException("This piece doesn't belong to the current player");
         }
 
+        origin.getPiece().moveTo(destinationSquareName);
         destination.setPiece(origin.getPiece());
         origin.setPiece(null);
     }

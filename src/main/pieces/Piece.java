@@ -171,7 +171,10 @@ public abstract class Piece {
         return isWhite;
     }
 
-    // Other methods
+    // Abstract methods
+    public abstract List<String> getPossibleMovements();
+
+    // Concrete methods
     public boolean belongsTo(Player player) {
         return (player == Player.WHITE && isWhite) || (player == Player.BLACK && !isWhite);
     }
@@ -180,5 +183,13 @@ public abstract class Piece {
         return SquareUtils.getName(row, col);
     }
 
-    public abstract List<String> getPossibleMovements();
+    public void moveTo(String squareName) {
+        if (!SquareUtils.isValid(squareName) || !getPossibleMovements().contains(squareName)) {
+            throw new IllegalArgumentException("Impossible to move to required location");
+        }
+
+        Coordinate coordinate = SquareUtils.getCoordinate(squareName);
+        row = coordinate.row();
+        col = coordinate.col();
+    }
 }
