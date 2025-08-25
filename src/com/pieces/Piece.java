@@ -1,5 +1,6 @@
 package com.pieces;
 
+import com.game.Player;
 import utils.Coordinate;
 import utils.SquareUtils;
 
@@ -165,9 +166,14 @@ public abstract class Piece {
         return pawn(square, false, blackPawnInitialRow);
     }
 
-    // Other methods
-    public boolean isWhitePiece() {
+    // Getters
+    public boolean isWhite() {
         return isWhite;
+    }
+
+    // Other methods
+    public boolean belongsTo(Player player) {
+        return (player == Player.WHITE && isWhite) || (player == Player.BLACK && !isWhite);
     }
 
     public String getSquare() {

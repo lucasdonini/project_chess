@@ -1,8 +1,11 @@
 package com.board;
 
 import com.pieces.Piece;
+import exception.EmptySelectionException;
 import utils.Coordinate;
 import utils.SquareUtils;
+
+import java.util.List;
 
 import static utils.PiecePositioningUtils.*;
 
@@ -28,13 +31,16 @@ public class Board {
 
     // Getters
     public Piece getPiece(String squareName) {
+        return getSquare(squareName).getPiece();
+    }
+
+    public Square getSquare(String squareName) {
         if (!SquareUtils.isValid(squareName)) {
             throw new IllegalArgumentException("Invalid square name");
         }
 
         Coordinate coordinate = SquareUtils.getCoordinate(squareName);
-        Square square = squares[coordinate.row()][coordinate.col()];
-        return square.getPiece();
+        return squares[coordinate.row()][coordinate.col()];
     }
 
     // Other methods

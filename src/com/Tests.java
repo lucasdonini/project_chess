@@ -1,10 +1,13 @@
 package com;
 
-import com.board.Board;
+import com.game.Game;
 
 public class Tests {
     public static void main(String[] args) {
-        Board board = Board.setBoard();
-        System.out.println(board.getPiece("b1").getPossibleMovements());
+        Game game = new Game();
+        game.begin();
+        System.out.println(game);
+        game.move("g1", "h3");
+        System.out.println(game);
     }
 }

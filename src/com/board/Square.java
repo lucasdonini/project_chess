@@ -42,11 +42,11 @@ public class Square {
     }
 
     public boolean hasWhitePiece() {
-        return piece != null && piece.isWhitePiece();
+        return piece != null && piece.isWhite();
     }
 
     public boolean hasBlackPiece() {
-        return piece != null && !piece.isWhitePiece();
+        return piece != null && !piece.isWhite();
     }
 
     public boolean hasKing() {
