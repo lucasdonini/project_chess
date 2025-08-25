@@ -1,6 +1,5 @@
 package com.pieces;
 
-import com.board.Square;
 import utils.SquareUtils;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class Rook extends Piece {
 
         for (int i = 0; i < 8; i++) {
             squares.add(SquareUtils.getName(i, col));
-            squares.add(SquareUtils.getName(col, i));
+            squares.add(SquareUtils.getName(row, i));
         }
 
         return squares.stream().distinct().toList();
