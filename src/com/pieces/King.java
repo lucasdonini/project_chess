@@ -17,12 +17,12 @@ public class King extends Piece {
         List<String> possibleFinalSqares = new ArrayList<>();
 
         possibleFinalRows.add(row);
-        possibleFinalRows.add(row+1);
-        possibleFinalRows.add(row-1);
+        possibleFinalRows.add(row + 1);
+        possibleFinalRows.add(row - 1);
 
         possibleFinalColumns.add(col);
-        possibleFinalColumns.add(col+1);
-        possibleFinalColumns.add(col-1);
+        possibleFinalColumns.add(col + 1);
+        possibleFinalColumns.add(col - 1);
 
         for (int fRow : possibleFinalRows) {
             for (int fCol : possibleFinalColumns) {

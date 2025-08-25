@@ -1,14 +1,12 @@
 package utils;
 
-import java.util.List;
-
 public class SquareUtils {
     public static String getName(int row, int col) {
         if (!isValid(row, col)) {
             throw new IllegalArgumentException("Invalid coordinates");
         }
 
-        return String.format("%c%d", 'a' + col, 8-row);
+        return String.format("%c%d", 'a' + col, 8 - row);
     }
 
     public static String getName(Coordinate coordinate) {

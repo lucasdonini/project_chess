@@ -27,16 +27,16 @@ public class Square {
         return piece;
     }
 
-    public String getName() {
-        return SquareUtils.getName(coordinate);
-    }
-
     // Setters
     public void setPiece(Piece piece) {
         this.piece = piece;
     }
 
-    // Methods
+    // Other Methods
+    public String getName() {
+        return SquareUtils.getName(coordinate);
+    }
+
     public boolean isFree() {
         return piece == null;
     }
