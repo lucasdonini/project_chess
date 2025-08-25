@@ -20,7 +20,7 @@ public abstract class Piece {
 
     // Factory methods
     // === PAWN ===
-    private static Pawn pawn(String square, boolean isWhite, int initialRow) {
+    protected static Pawn pawn(String square, boolean isWhite, int initialRow) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid position: ");
         }
@@ -47,7 +47,7 @@ public abstract class Piece {
     }
 
     // === KING ===
-    private static King king(String square, boolean isWhite) {
+    protected static King king(String square, boolean isWhite) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid position");
         }
@@ -66,7 +66,7 @@ public abstract class Piece {
     }
 
     // === ROOK ===
-    private static Rook rook(String square, boolean isWhite) {
+    protected static Rook rook(String square, boolean isWhite) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid square");
         }
@@ -93,7 +93,7 @@ public abstract class Piece {
     }
 
     // === BISHOP ===
-    private static Bishop bishop(String square, boolean isWhite) {
+    protected static Bishop bishop(String square, boolean isWhite) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid square name");
         }
@@ -119,9 +119,32 @@ public abstract class Piece {
         return bishop(square, false);
     }
 
+    // === QUEEN ===
+    protected static Queen queen(String square, boolean isWhite) {
+        if (!SquareUtils.isValid(square)) {
+            throw new IllegalArgumentException("Invalid position");
+        }
+
+        Coordinate position = SquareUtils.getCoordinate(square);
+
+        return new Queen(isWhite, position.row(), position.col());
+    }
+
+    public static Queen whiteQueen() {
+        return queen(whiteQueenSquare, true);
+    }
+
+    public static Queen blackQueen() {
+        return queen(blackQueenSquare, false);
+    }
+
     // Other methods
     public boolean isWhitePiece() {
         return isWhite;
+    }
+
+    public String getSquare() {
+        return SquareUtils.getName(row, col);
     }
 
     public abstract List<String> getPossibleMovements();

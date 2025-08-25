@@ -41,16 +41,22 @@ public class Board {
     private void putPieces() {
         for (Square[] line : squares) {
             for (Square square : line) {
-                String name = square.getName();
+                String squareName = square.getName();
+                Piece piece;
 
-                if (whiteKingSquare.equals(name)) square.setPiece(Piece.whiteKing());
-                else if (blackKingSquare.equals(name)) square.setPiece(Piece.blackKing());
-                else if (whitePawnSquares.contains(name)) square.setPiece(Piece.whitePawn(name));
-                else if (blackPawnSquares.contains(name)) square.setPiece(Piece.blackPawn(name));
-                else if (whiteRookSquares.contains(name)) square.setPiece(Piece.whiteRook(name));
-                else if (blackRookSquares.contains(name)) square.setPiece(Piece.blackRook(name));
-                else if (whiteBishopSquares.contains(name)) square.setPiece(Piece.whiteBishop(name));
-                else if (blackBishopSquares.contains(name)) square.setPiece(Piece.blackBishop(name));
+                if (whiteRookSquares.contains(squareName)) piece = Piece.whiteRook(squareName);
+                else if (blackRookSquares.contains(squareName)) piece = Piece.blackRook(squareName);
+                else if (whiteBishopSquares.contains(squareName)) piece = Piece.whiteBishop(squareName);
+                else if (blackBishopSquares.contains(squareName)) piece = Piece.blackBishop(squareName);
+                else if (whiteQueenSquare.equals(squareName)) piece = Piece.whiteQueen();
+                else if (blackQueenSquare.equals(squareName)) piece = Piece.blackQueen();
+                else if (whiteKingSquare.equals(squareName)) piece = Piece.whiteKing();
+                else if (blackKingSquare.equals(squareName)) piece = Piece.blackKing();
+                else if (whitePawnSquares.contains(squareName)) piece = Piece.whitePawn(squareName);
+                else if (blackPawnSquares.contains(squareName)) piece = Piece.blackPawn(squareName);
+                else piece = null;
+
+                square.setPiece(piece);
             }
         }
     }
