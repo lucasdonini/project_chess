@@ -66,13 +66,18 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        int count = 8;
 
         for (Square[] row : squares) {
+            sb.append(count);
+            sb.append(" ");
+            count--;
+
             for (Square sq : row) {
                 Piece p = sq.getPiece();
 
                 if (p == null) {
-                    sb.append("  -  ");
+                    sb.append("   - ");
                     continue;
                 }
 
@@ -80,6 +85,13 @@ public class Board {
                 sb.append(text);
             }
             sb.append('\n');
+        }
+
+        sb.append("\n ");
+        for (int i = 0; i < 8; i++) {
+            char letter = (char) ('A' + i);
+            sb.append("    ");
+            sb.append(letter);
         }
 
         return sb.toString();

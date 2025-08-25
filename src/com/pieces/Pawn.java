@@ -35,6 +35,6 @@ public class Pawn extends Piece {
 
     @Override
     public String toString() {
-        return isWhite ? "W" : "B";
+        return String.format("%cP", isWhite ? 'W' : 'B');
     }
 }
