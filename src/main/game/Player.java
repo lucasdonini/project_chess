@@ -1,8 +1,8 @@
 package main.game;
 
 public enum Player {
-    BLACK("Black Pieces"),
-    WHITE("White pieces");
+    BLACK("Black"),
+    WHITE("White");
 
     private final String displayName;
 
