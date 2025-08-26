@@ -7,6 +7,7 @@ import main.board.Square;
 import main.pieces.King;
 import main.pieces.Pawn;
 
+import java.awt.*;
 import java.util.List;
 
 public class Game {
@@ -14,6 +15,7 @@ public class Game {
     private Player player;
     private int turnCount;
     private boolean isGameOver;
+    private Player winner;
 
     // Constructors
     public Game() {
@@ -24,6 +26,10 @@ public class Game {
     // Getters
     public boolean isOver() {
         return isGameOver;
+    }
+
+    public Player getWinner() {
+        return winner;
     }
 
     // Other methods
@@ -69,8 +75,17 @@ public class Game {
         Square origin = board.getSquare(originSquareName);
         Square destination = board.getSquare(destinationSquareName);
 
+        if (origin.getPiece() == null) {
+            throw new EmptySelectionException("You selected an empty square");
+        }
+
         if (!possibleMoves.contains(destinationSquareName)) {
             throw new IllegalArgumentException("Cannot move to specified square");
+        }
+
+        if (destination.getPiece() instanceof King) {
+            isGameOver = true;
+            winner = player;
         }
 
         destination.setPiece(origin.getPiece());

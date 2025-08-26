@@ -8,7 +8,7 @@ import utils.SquareUtils;
 import java.util.List;
 
 import static utils.InputUtils.input;
-import static utils.TerminalUtils.inRed;
+import static utils.TerminalUtils.*;
 
 public class Main {
     private static final List<String> squares = SquareUtils.getAllSquares();
@@ -53,6 +53,8 @@ public class Main {
             }
         } while (!game.isOver());
 
-        System.out.println(inRed("Game over"));
+        System.out.println('\n' + game.toString());
+        System.out.println(inRed("\nGame over"));
+        System.out.println(inGreen("Winner: %s", game.getWinner()));
     }
 }
