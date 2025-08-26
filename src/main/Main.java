@@ -1,11 +1,14 @@
 package main;
 
+import exception.EmptySelectionException;
+import exception.ImpossibleToMoveException;
 import main.game.Game;
 import utils.SquareUtils;
 
 import java.util.List;
 
 import static utils.InputUtils.input;
+import static utils.TerminalUtils.inRed;
 
 public class Main {
     private static final List<String> squares = SquareUtils.getAllSquares();
@@ -17,28 +20,39 @@ public class Main {
         // Game loop
         game.begin();
         do {
-            // Variables
-            String originSquareName, destinationSquareName;
+            try {
+                // Variables
+                String originSquareName, destinationSquareName;
 
-            System.out.println(game);
+                System.out.println('\n' + game.toString());
 
-            originSquareName = input("Entry the location of the piece you want to move: ", squares::contains);
+                originSquareName = input("Entry the location of the piece you want to move: ", squares::contains);
 
-            List<String> possibleMoves = game.possibleMoves(originSquareName);
-            String possibleMovesVisualization = possibleMoves.toString().replaceAll("[\\[\\]]", "");
+                List<String> possibleMoves = game.possibleMoves(originSquareName);
+                String possibleMovesVisualization = possibleMoves.toString().replaceAll("[\\[\\]]", "");
 
-            System.out.printf("Possible destinations: %s\n", possibleMovesVisualization);
-            destinationSquareName = input(
-                    "Entry the destination square name: ",
-                    "Cannot move to specified square.",
-                    possibleMoves::contains
-            );
+                System.out.printf("Possible destinations: %s\n", possibleMovesVisualization);
+                destinationSquareName = input(
+                        "Entry the destination square name: ",
+                        "Cannot move to specified square.",
+                        possibleMoves::contains
+                );
 
-            game.move(originSquareName, destinationSquareName, possibleMoves);
+                game.move(originSquareName, destinationSquareName, possibleMoves);
+                game.nextTurn();
 
-            game.nextTurn();
+            } catch (ImpossibleToMoveException e) {
+                System.out.println(inRed("This piece is stuck. Try to move another one."));
+
+            } catch (IllegalStateException e) {
+                System.out.println(inRed(e.getMessage()));
+
+            } catch (EmptySelectionException e) {
+                System.out.println(inRed("You selected an empty square. Select another one."));
+
+            }
         } while (!game.isOver());
 
-        System.err.println("Game over");
+        System.out.println(inRed("Game over"));
     }
 }
