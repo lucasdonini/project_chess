@@ -1,9 +1,11 @@
 package main.pieces;
 
+import main.board.Board;
+import main.board.Square;
+import utils.SquareUtils;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import static utils.SquareUtils.getName;
 
 public class King extends Piece {
     protected King(boolean isWhite, int row, int col) {
@@ -11,7 +13,7 @@ public class King extends Piece {
     }
 
     @Override
-    public List<String> getPossibleMovements() {
+    public List<String> getPossibleMovements(final Board board) {
         List<Integer> possibleFinalRows = new ArrayList<>();
         List<Integer> possibleFinalColumns = new ArrayList<>();
         List<String> possibleFinalSqares = new ArrayList<>();
@@ -26,12 +28,14 @@ public class King extends Piece {
 
         for (int fRow : possibleFinalRows) {
             for (int fCol : possibleFinalColumns) {
-                if (fRow < 0 || fCol < 0 || fRow > 7 || fCol > 7) {
-                    continue;
-                }
+                if (!SquareUtils.isValid(fRow, fCol)) continue;
 
-                String square = getName(fRow, fCol);
-                possibleFinalSqares.add(square);
+                String sqName = SquareUtils.getName(fRow, fCol);
+                Square sq = board.getSquare(sqName);
+
+                if (sq.isFree() || sq.getPiece().isWhite != this.isWhite) {
+                    possibleFinalSqares.add(sqName);
+                }
             }
         }
 

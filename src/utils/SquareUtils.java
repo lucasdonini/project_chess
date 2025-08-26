@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SquareUtils {
     public static String getName(int row, int col) {
         if (!isValid(row, col)) {
@@ -49,5 +52,17 @@ public class SquareUtils {
 
     public static boolean isValid(Coordinate coordinate) {
         return isValid(coordinate.row(), coordinate.col());
+    }
+
+    public static List<String> getAllSquares() {
+        List<String> squares = new ArrayList<>();
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                squares.add(getName(i, j));
+            }
+        }
+
+        return squares;
     }
 }

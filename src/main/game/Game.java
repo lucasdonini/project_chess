@@ -1,22 +1,29 @@
 package main.game;
 
+import exception.EmptySelectionException;
+import exception.ImpossibleToMoveException;
 import main.board.Board;
 import main.board.Square;
-import main.pieces.Piece;
-import exception.EmptySelectionException;
+import main.pieces.King;
+import main.pieces.Pawn;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
     private final Board board;
     private Player player;
     private int turnCount;
+    private boolean isGameOver;
 
     // Constructors
     public Game() {
         board = Board.setBoard();
         turnCount = 0;
+    }
+
+    // Getters
+    public boolean isOver() {
+        return isGameOver;
     }
 
     // Other methods
@@ -27,50 +34,47 @@ public class Game {
 
         player = Player.WHITE;
         turnCount = 1;
+        isGameOver = false;
     }
 
     public void nextTurn() {
         player = player.opposite();
     }
 
-    private List<String> getPossibleDestinations(String selectedSquare) {
-        List<String> result = new ArrayList<>();
-        Piece piece = board.getPiece(selectedSquare);
+    public List<String> possibleMoves(String originSquareName) {
+        Square origin = board.getSquare(originSquareName);
 
-        if (piece == null) {
-            throw new EmptySelectionException("Empty square selected. No moves allowed.");
+        if (!origin.getPiece().belongsTo(player)) {
+            throw new IllegalStateException("The selected piece doesn't belong to the current player");
         }
 
-        List<String> possibleMoves = piece.getPossibleMovements();
-
-        for (String squareName : possibleMoves) {
-            Square square = board.getSquare(squareName);
-            Piece destination = square.getPiece();
-
-            if (destination == null || !destination.belongsTo(player)) {
-                result.add(squareName);
-            }
+        if (origin.isFree()) {
+            throw new EmptySelectionException("Empty square selected");
         }
 
-        return result;
+        List<String> squares = origin.getPiece().getPossibleMovements(board);
+
+        if (origin.getPiece() instanceof Pawn pawn) {
+            squares.addAll(pawn.getPossibleCaptureMovements(board));
+        }
+
+        if (squares.isEmpty()) {
+            throw new ImpossibleToMoveException("Cannot move anywhere");
+        }
+
+        return squares;
     }
 
-    public void move(String originSquareName, String destinationSquareName) {
+    public void move(String originSquareName, String destinationSquareName, List<String> possibleMoves) {
         Square origin = board.getSquare(originSquareName);
         Square destination = board.getSquare(destinationSquareName);
 
-        List<String> possibleDestinations = getPossibleDestinations(originSquareName);
-
-        if (!possibleDestinations.contains(destinationSquareName)) {
-            throw new IllegalArgumentException("Cannot get to destination square");
+        if (!possibleMoves.contains(destinationSquareName)) {
+            throw new IllegalArgumentException("Cannot move to specified square");
         }
 
-        if (!origin.getPiece().belongsTo(player)) {
-            throw new IllegalStateException("This piece doesn't belong to the current player");
-        }
-
-        origin.getPiece().moveTo(destinationSquareName);
         destination.setPiece(origin.getPiece());
+        destination.getPiece().moveTo(destinationSquareName);
         origin.setPiece(null);
     }
 

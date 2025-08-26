@@ -1,5 +1,6 @@
 package main.pieces;
 
+import main.board.Board;
 import main.game.Player;
 import utils.Coordinate;
 import utils.SquareUtils;
@@ -172,7 +173,7 @@ public abstract class Piece {
     }
 
     // Abstract methods
-    public abstract List<String> getPossibleMovements();
+    public abstract List<String> getPossibleMovements(final Board board);
 
     // Concrete methods
     public boolean belongsTo(Player player) {
@@ -184,7 +185,7 @@ public abstract class Piece {
     }
 
     public void moveTo(String squareName) {
-        if (!SquareUtils.isValid(squareName) || !getPossibleMovements().contains(squareName)) {
+        if (!SquareUtils.isValid(squareName)) {
             throw new IllegalArgumentException("Impossible to move to required location");
         }
 

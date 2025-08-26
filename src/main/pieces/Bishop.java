@@ -1,6 +1,7 @@
 package main.pieces;
 
-import utils.Coordinate;
+import main.board.Board;
+import main.board.Square;
 import utils.SquareUtils;
 
 import java.util.ArrayList;
@@ -12,19 +13,71 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<String> getPossibleMovements() {
+    public List<String> getPossibleMovements(final Board board) {
         List<String> squares = new ArrayList<>();
 
-        for (int i = 0; i < 8; i++) {
-            List<Coordinate> inner = List.of(
-                    new Coordinate(row + i, col + i),
-                    new Coordinate(row + i, col - i),
-                    new Coordinate(row - i, col + i),
-                    new Coordinate(row - i, col - i)
-            );
+        // Auxiliar variables
+        boolean ur = true, ul = true, dr = true, dl = true;
+        int count = 1;
 
-            inner = inner.stream().distinct().filter(SquareUtils::isValid).toList();
-            squares.addAll(inner.stream().map(SquareUtils::getName).toList());
+        while (ur || ul || dr || dl) {
+            String sqName;
+            Square sq;
+
+            ur = ur && SquareUtils.isValid(row - count, col + count); // Up Right
+            ul = ul && SquareUtils.isValid(row - count, col - count); // Up Left
+            dr = dr && SquareUtils.isValid(row + count, col + count); // Down Right
+            dl = dl && SquareUtils.isValid(row + count, col - count); // Down Left
+
+            if (ur) {
+                sqName = SquareUtils.getName(row - count, col + count);
+                sq = board.getSquare(sqName);
+
+                if (sq.isFree()) {
+                    squares.add(sqName);
+                } else {
+                    ur = false;
+                    if (sq.getPiece().isWhite != this.isWhite) squares.add(sqName);
+                }
+            }
+
+            if (ul) {
+                sqName = SquareUtils.getName(row - count, col - count);
+                sq = board.getSquare(sqName);
+
+                if (sq.isFree()) {
+                    squares.add(sqName);
+                } else {
+                    ul = false;
+                    if (sq.getPiece().isWhite != this.isWhite) squares.add(sqName);
+                }
+            }
+
+            if (dr) {
+                sqName = SquareUtils.getName(row + count, col + count);
+                sq = board.getSquare(sqName);
+
+                if (sq.isFree()) {
+                    squares.add(sqName);
+                } else {
+                    dr = false;
+                    if (sq.getPiece().isWhite != this.isWhite) squares.add(sqName);
+                }
+            }
+
+            if (dl) {
+                sqName = SquareUtils.getName(row + count, col - count);
+                sq = board.getSquare(sqName);
+
+                if (sq.isFree()) {
+                    squares.add(sqName);
+                } else {
+                    dl = false;
+                    if (sq.getPiece().isWhite != this.isWhite) squares.add(sqName);
+                }
+            }
+
+            count++;
         }
 
         return squares;
