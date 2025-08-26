@@ -84,7 +84,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public String toString() {
-        return String.format("%cR", isWhite ? 'W' : 'B');
+    protected String visualRep() {
+        return "R";
     }
 }

@@ -21,7 +21,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public String toString() {
-        return String.format("%cQ", isWhite ? 'W' : 'B');
+    protected String visualRep() {
+        return "Q";
     }
 }

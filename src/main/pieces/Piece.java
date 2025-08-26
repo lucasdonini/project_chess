@@ -4,6 +4,7 @@ import main.board.Board;
 import main.game.Player;
 import utils.Coordinate;
 import utils.SquareUtils;
+import utils.TerminalUtils;
 
 import java.util.List;
 
@@ -83,7 +84,7 @@ public abstract class Piece {
 
         Coordinate position = SquareUtils.getCoordinate(square);
 
-        return new Bishop(true, position.row(), position.col());
+        return new Bishop(isWhite, position.row(), position.col());
     }
 
     public static Bishop whiteBishop(String square) {
@@ -174,6 +175,7 @@ public abstract class Piece {
 
     // Abstract methods
     public abstract List<String> getPossibleMovements(final Board board);
+    protected abstract String visualRep();
 
     // Concrete methods
     public boolean belongsTo(Player player) {
@@ -192,5 +194,11 @@ public abstract class Piece {
         Coordinate coordinate = SquareUtils.getCoordinate(squareName);
         row = coordinate.row();
         col = coordinate.col();
+    }
+
+    @Override
+    public String toString() {
+        String color = isWhite ? "" : TerminalUtils.RED;
+        return color + visualRep() + TerminalUtils.RESET;
     }
 }

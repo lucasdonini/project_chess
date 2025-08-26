@@ -45,7 +45,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public String toString() {
-        return String.format("%cN", isWhite ? 'W' : 'B');
+    protected String visualRep() {
+        return "N";
     }
 }

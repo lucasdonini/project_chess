@@ -69,7 +69,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public String toString() {
-        return String.format("%cP", isWhite ? 'W' : 'B');
+    protected String visualRep() {
+        return "P";
     }
 }

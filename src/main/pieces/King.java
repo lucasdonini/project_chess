@@ -43,7 +43,7 @@ public class King extends Piece {
     }
 
     @Override
-    public String toString() {
-        return String.format("%cK", isWhite ? 'W' : 'B');
+    protected String visualRep() {
+        return "K";
     }
 }

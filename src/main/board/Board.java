@@ -47,18 +47,30 @@ public class Board {
                 String squareName = square.getName();
                 Piece piece;
 
+                // Rooks
                 if (whiteRookSquares.contains(squareName)) piece = Piece.whiteRook(squareName);
                 else if (blackRookSquares.contains(squareName)) piece = Piece.blackRook(squareName);
+
+                // Knights
                 else if (whiteKnightSquares.contains(squareName)) piece = Piece.whiteKnight(squareName);
                 else if (blackKnightSquares.contains(squareName)) piece = Piece.blackKnight(squareName);
+
+                // Bishops
                 else if (whiteBishopSquares.contains(squareName)) piece = Piece.whiteBishop(squareName);
                 else if (blackBishopSquares.contains(squareName)) piece = Piece.blackBishop(squareName);
+
+                // Queens
                 else if (whiteQueenSquare.equals(squareName)) piece = Piece.whiteQueen();
                 else if (blackQueenSquare.equals(squareName)) piece = Piece.blackQueen();
+
+                // Kings
                 else if (whiteKingSquare.equals(squareName)) piece = Piece.whiteKing();
                 else if (blackKingSquare.equals(squareName)) piece = Piece.blackKing();
+
+                // Pawns
                 else if (whitePawnSquares.contains(squareName)) piece = Piece.whitePawn(squareName);
                 else if (blackPawnSquares.contains(squareName)) piece = Piece.blackPawn(squareName);
+
                 else piece = null;
 
                 square.setPiece(piece);
@@ -80,7 +92,7 @@ public class Board {
                 Piece p = sq.getPiece();
 
                 if (p == null) {
-                    sb.append("   - ");
+                    sb.append(" - ");
                     continue;
                 }
 
@@ -92,8 +104,8 @@ public class Board {
 
         sb.append("\n ");
         for (int i = 0; i < 8; i++) {
-            char letter = (char) ('A' + i);
-            sb.append("    ");
+            char letter = (char) ('a' + i);
+            sb.append("  ");
             sb.append(letter);
         }
 
