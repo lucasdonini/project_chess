@@ -40,6 +40,10 @@ public class Square {
         return piece;
     }
 
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
     // Setters
     public void setPiece(Piece piece) {
         this.piece = piece;

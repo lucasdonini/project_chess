@@ -3,6 +3,7 @@ package main;
 import exception.EmptySelectionException;
 import exception.ImpossibleToMoveException;
 import main.game.Game;
+import main.pieces.PieceType;
 import utils.SquareUtils;
 
 import java.util.List;
@@ -45,6 +46,25 @@ public class Main {
                 }
 
                 game.move(originSquareName, destinationSquareName, possibleMoves);
+
+                if (game.canPromote(destinationSquareName)) {
+                    List<String> options = List.of("Q", "N", "B", "R");
+                    System.out.println("\nPromotion options: Q = Queen; N = Knight; B = Bishop; R = Rook; P = Pawn");
+                    String promotionCode = input("Insert the desired piece for promotion: ", options::contains);
+
+                    PieceType type = switch (promotionCode) {
+                        case "Q" -> PieceType.QUEEN;
+                        case "N" -> PieceType.KNIGHT;
+                        case "B" -> PieceType.BISHOP;
+                        case "R" -> PieceType.ROOK;
+                        default -> null;
+                    };
+
+                    if (type == null) throw new RuntimeException("Something went wrong with promotion");
+
+                    game.promote(destinationSquareName, type);
+                }
+
                 game.nextTurn();
 
             } catch (ImpossibleToMoveException e) {

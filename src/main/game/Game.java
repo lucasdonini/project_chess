@@ -4,12 +4,14 @@ import exception.EmptySelectionException;
 import exception.ImpossibleToMoveException;
 import main.board.Board;
 import main.board.Square;
-import main.pieces.Pawn;
-import main.pieces.Piece;
+import main.pieces.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
+
+import static utils.PiecePositioningUtils.*;
 
 public class Game {
     protected final Board board;
@@ -149,6 +151,43 @@ public class Game {
         } catch (ImpossibleToMoveException e) {
             return true;
         }
+    }
+
+    public boolean canPromote(String recentDestinationSquareName) {
+        int exchangingLine = player == Player.WHITE ? whiteExchangingLine : blackExchangingLine;
+        Square target = board.getSquare(recentDestinationSquareName);
+
+        if (target.getCoordinate().row() == exchangingLine) {
+            Piece p = target.getPiece();
+
+            return p instanceof Pawn && p.belongsTo(player);
+        }
+
+        return false;
+    }
+
+    public void promote(String targetSquareName, PieceType type) {
+        Square targetSq = board.getSquare(targetSquareName);
+        Piece target = targetSq.getPiece();
+
+        BiFunction<String, Boolean, Piece> factory = switch (type) {
+            case QUEEN -> Piece::queen;
+            case KNIGHT -> Piece::knight;
+            case BISHOP -> Piece::bishop;
+            case ROOK -> Piece::rook;
+            default -> null;
+        };
+
+        if (factory == null) {
+            throw new IllegalArgumentException("Invalid Piece Type");
+        }
+
+        Piece p = factory.apply(targetSquareName, target.isWhite());
+        targetSq.setPiece(p);
+
+        List<Piece> pieces = piecesPerPlayer.get(player);
+        pieces.remove(target);
+        pieces.add(p);
     }
 
     @Override

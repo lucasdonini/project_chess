@@ -17,7 +17,7 @@ public class Pawn extends Piece {
     protected Pawn(boolean isWhite, int row, int col) {
         super(isWhite, row, col);
 
-        originalRow = row;
+        originalRow = isWhite ? 6 : 1;
         dRow = isWhite ? -1 : 1;
     }
 
