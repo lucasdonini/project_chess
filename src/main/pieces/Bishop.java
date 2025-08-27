@@ -13,6 +13,11 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public Bishop copy() {
+        return new Bishop(isWhite, row, col);
+    }
+
+    @Override
     public List<String> getPossibleMovements(final Board board) {
         List<String> squares = new ArrayList<>();
 

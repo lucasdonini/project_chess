@@ -13,6 +13,10 @@ public class Knight extends Piece {
         super(isWhite, row, col);
     }
 
+    public Knight copy() {
+        return new Knight(isWhite, row, col);
+    }
+
     @Override
     public List<String> getPossibleMovements(final Board board) {
         List<Coordinate> aux = new ArrayList<>();

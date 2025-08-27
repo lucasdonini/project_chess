@@ -4,23 +4,50 @@ import exception.EmptySelectionException;
 import exception.ImpossibleToMoveException;
 import main.board.Board;
 import main.board.Square;
-import main.pieces.King;
 import main.pieces.Pawn;
+import main.pieces.Piece;
 
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Game {
-    private final Board board;
-    private Player player;
-    private int turnCount;
-    private boolean isGameOver;
-    private Player winner;
+    protected final Board board;
+    protected boolean isGameOver;
+    protected boolean isInCheck;
+    protected Player player;
+    protected Player winner;
+    protected int turnCount;
+
+    protected Map<Player, List<Piece>> piecesPerPlayer;
 
     // Constructors
-    public Game() {
-        board = Board.setBoard();
+    public Game(Board board) {
+        piecesPerPlayer = new HashMap<>();
+        this.board = board;
         turnCount = 0;
+    }
+
+    public Game() {
+        this(Board.setBoard());
+    }
+
+    protected Game(Board board, boolean isGameOver, boolean isInCheck, Player player, Player winner, int turnCount, Map<Player, List<Piece>> piecesPerPlayer) {
+        this.board = board;
+        this.isGameOver = isGameOver;
+        this.isInCheck = isInCheck;
+        this.player = player;
+        this.winner = winner;
+        this.turnCount = turnCount;
+        this.piecesPerPlayer = piecesPerPlayer;
+    }
+
+    // Factory methods
+    public Game copy() {
+        Board boardCp = board.copy();
+
+        return new Game(boardCp, isGameOver, isInCheck, player, winner, turnCount, boardCp.getPiecesPerPlayer());
     }
 
     // Getters
@@ -28,8 +55,20 @@ public class Game {
         return isGameOver;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     public Player getWinner() {
         return winner;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Map<Player, List<Piece>> getPiecesPerPlayer() {
+        return piecesPerPlayer;
     }
 
     // Other methods
@@ -41,21 +80,32 @@ public class Game {
         player = Player.WHITE;
         turnCount = 1;
         isGameOver = false;
+
+        piecesPerPlayer = board.getPiecesPerPlayer();
     }
 
     public void nextTurn() {
         player = player.opposite();
+        turnCount++;
+
+        CheckMateController cmc = new CheckMateController(this);
+        isInCheck = cmc.isCheck();
+        isGameOver = cmc.isCheckMate();
+
+        if (isGameOver) {
+            winner = player.opposite();
+        }
     }
 
     public List<String> possibleMoves(String originSquareName) {
         Square origin = board.getSquare(originSquareName);
 
-        if (!origin.getPiece().belongsTo(player)) {
-            throw new IllegalStateException("The selected piece doesn't belong to the current player");
-        }
-
         if (origin.isFree()) {
             throw new EmptySelectionException("Empty square selected");
+        }
+
+        if (!origin.getPiece().belongsTo(player)) {
+            throw new IllegalStateException("The selected piece doesn't belong to the current player");
         }
 
         List<String> squares = origin.getPiece().getPossibleMovements(board);
@@ -83,14 +133,23 @@ public class Game {
             throw new IllegalArgumentException("Cannot move to specified square");
         }
 
-        if (destination.getPiece() instanceof King) {
-            isGameOver = true;
-            winner = player;
-        }
-
         destination.setPiece(origin.getPiece());
         destination.getPiece().moveTo(destinationSquareName);
         origin.setPiece(null);
+    }
+
+    public boolean isMovementLegal(String origin, String destination, List<String> possibleMoves) {
+        Game game = this.copy();
+
+        try {
+            game.move(origin, destination, possibleMoves);
+
+            CheckMateController cmc = new CheckMateController(game);
+            return !cmc.isCheck() && !cmc.isCheckMate();
+
+        } catch (ImpossibleToMoveException e) {
+            return false;
+        }
     }
 
     @Override

@@ -10,6 +10,10 @@ public class Queen extends Piece {
         super(isWhite, row, col);
     }
 
+    public Queen copy() {
+        return new Queen(isWhite, row, col);
+    }
+
     @Override
     public List<String> getPossibleMovements(final Board board) {
         List<String> squares = new ArrayList<>();

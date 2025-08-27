@@ -23,7 +23,7 @@ public abstract class Piece {
 
     // Factory methods
     // === ROOK ===
-    protected static Rook rook(String square, boolean isWhite) {
+    public static Rook rook(String square, boolean isWhite) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid square");
         }
@@ -50,7 +50,7 @@ public abstract class Piece {
     }
 
     // === KNIGHT ===
-    protected static Knight knight(String square, boolean isWhite) {
+    public static Knight knight(String square, boolean isWhite) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid square");
         }
@@ -77,7 +77,7 @@ public abstract class Piece {
     }
 
     // === BISHOP ===
-    protected static Bishop bishop(String square, boolean isWhite) {
+    public static Bishop bishop(String square, boolean isWhite) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid square name");
         }
@@ -104,7 +104,7 @@ public abstract class Piece {
     }
 
     // === QUEEN ===
-    protected static Queen queen(String square, boolean isWhite) {
+    public static Queen queen(String square, boolean isWhite) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid position");
         }
@@ -123,7 +123,7 @@ public abstract class Piece {
     }
 
     // === KING ===
-    protected static King king(String square, boolean isWhite) {
+    public static King king(String square, boolean isWhite) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid position");
         }
@@ -142,7 +142,7 @@ public abstract class Piece {
     }
 
     // === PAWN ===
-    protected static Pawn pawn(String square, boolean isWhite, int initialRow) {
+    public static Pawn pawn(String square, boolean isWhite) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid position: ");
         }
@@ -157,7 +157,7 @@ public abstract class Piece {
             throw new IllegalArgumentException("Invalid initial white pawn position");
         }
 
-        return pawn(square, true, whitePawnInitialRow);
+        return pawn(square, true);
     }
 
     public static Pawn blackPawn(String square) {
@@ -165,7 +165,7 @@ public abstract class Piece {
             throw new IllegalArgumentException("Invalid initial black pawn position");
         }
 
-        return pawn(square, false, blackPawnInitialRow);
+        return pawn(square, false);
     }
 
     // Getters
@@ -173,9 +173,14 @@ public abstract class Piece {
         return isWhite;
     }
 
+    public Coordinate getCoordinate() {
+        return new Coordinate(row, col);
+    }
+
     // Abstract methods
     public abstract List<String> getPossibleMovements(final Board board);
     protected abstract String visualRep();
+    public abstract Piece copy();
 
     // Concrete methods
     public boolean belongsTo(Player player) {

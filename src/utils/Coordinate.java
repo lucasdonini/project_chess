@@ -5,4 +5,8 @@ public record Coordinate(int row, int col) {
     public String toString() {
         return String.format("(%d, %d)", row, col);
     }
+
+    public Coordinate copy() {
+        return new Coordinate(row, col);
+    }
 }

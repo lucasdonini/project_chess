@@ -22,6 +22,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public Pawn copy() {
+        return new Pawn(isWhite, row, col);
+    }
+
+    @Override
     public List<String> getPossibleMovements(final Board board) {
         List<String> squares = new ArrayList<>();
 

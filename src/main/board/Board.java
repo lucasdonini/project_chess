@@ -1,21 +1,30 @@
 package main.board;
 
+import main.game.Player;
 import main.pieces.Piece;
 import utils.Coordinate;
 import utils.SquareUtils;
 
+import java.util.*;
+
 import static utils.PiecePositioningUtils.*;
 
 public class Board {
-    private final Square[][] squares = new Square[8][8];
+    private final Square[][] squares;
 
     // Constructors
-    private Board() {
+    public Board() {
+        squares = new Square[8][8];
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 squares[i][j] = new Square(SquareUtils.getName(i, j));
             }
         }
+    }
+
+    private Board(Square[][] squares) {
+        this.squares = squares;
     }
 
     // Factory methods
@@ -24,6 +33,18 @@ public class Board {
         board.putPieces();
 
         return board;
+    }
+
+    public Board copy() {
+        Square[][] cpSquares = new Square[8][8];
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                cpSquares[i][j] = squares[i][j].copy();
+            }
+        }
+
+        return new Board(cpSquares);
     }
 
     // Getters
@@ -76,6 +97,23 @@ public class Board {
                 square.setPiece(piece);
             }
         }
+    }
+
+    public Map<Player, List<Piece>> getPiecesPerPlayer() {
+        Map<Player, List<Piece>> map = Map.of(Player.WHITE, new ArrayList<>(), Player.BLACK, new ArrayList<>());
+
+        for (Square[] line : squares) {
+            for (Square sq : line) {
+                Piece piece = sq.getPiece();
+
+                if (piece == null) continue;
+
+                Player player = piece.isWhite() ? Player.WHITE : Player.BLACK;
+                map.get(player).add(piece);
+            }
+        }
+
+        return map;
     }
 
     @Override

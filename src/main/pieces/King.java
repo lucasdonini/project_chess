@@ -13,6 +13,11 @@ public class King extends Piece {
     }
 
     @Override
+    public King copy() {
+        return new King(isWhite, row, col);
+    }
+
+    @Override
     public List<String> getPossibleMovements(final Board board) {
         List<Integer> possibleFinalRows = new ArrayList<>();
         List<Integer> possibleFinalColumns = new ArrayList<>();

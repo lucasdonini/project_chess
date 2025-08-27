@@ -22,6 +22,17 @@ public class Square {
         this(name, null);
     }
 
+    protected Square(Coordinate coordinate, Piece piece) {
+        this.coordinate = coordinate;
+        this.piece = piece;
+    }
+
+    // Factory methods
+    public Square copy() {
+        Piece newPiece = piece == null ? null : piece.copy();
+        return new Square(coordinate.copy(), newPiece);
+    }
+
     // Getters
     public Piece getPiece() {
         return piece;
@@ -39,25 +50,5 @@ public class Square {
 
     public boolean isFree() {
         return piece == null;
-    }
-
-    public boolean hasWhitePiece() {
-        return piece != null && piece.isWhite();
-    }
-
-    public boolean hasBlackPiece() {
-        return piece != null && !piece.isWhite();
-    }
-
-    public boolean hasKing() {
-        return piece != null && "King".equals(piece.getClass().getName());
-    }
-
-    public boolean hasWhiteKing() {
-        return hasWhitePiece() && hasKing();
-    }
-
-    public boolean hasBlackKing() {
-        return hasBlackPiece() && hasKing();
     }
 }

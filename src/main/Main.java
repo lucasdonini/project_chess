@@ -38,6 +38,12 @@ public class Main {
                         possibleMoves::contains
                 );
 
+                if (!game.isMovementLegal(originSquareName, destinationSquareName, possibleMoves)) {
+                    System.out.println(inRed("Illegal movement."));
+                    System.out.println("Action cancelled. Restarting turn.");
+                    continue;
+                }
+
                 game.move(originSquareName, destinationSquareName, possibleMoves);
                 game.nextTurn();
 
@@ -54,7 +60,8 @@ public class Main {
         } while (!game.isOver());
 
         System.out.println('\n' + game.toString());
-        System.out.println(inRed("\nGame over"));
+        System.out.println(inRed("Check Mate"));
+        System.out.println(inRed("Game over"));
         System.out.println(inGreen("Winner: %s", game.getWinner()));
     }
 }

@@ -13,6 +13,11 @@ public class Rook extends Piece {
     }
 
     @Override
+    public Rook copy() {
+        return new Rook(isWhite, row, col);
+    }
+
+    @Override
     public List<String> getPossibleMovements(final Board board) {
         List<String> squares = new ArrayList<>();
 
