@@ -66,6 +66,11 @@ public class Board {
         return squares[coordinate.row()][coordinate.col()];
     }
 
+    // Setters
+    public void putPiece(String squareName, Piece piece) {
+        getSquare(squareName).setPiece(piece);
+    }
+
     // Other methods
     private void putPieces() {
         for (Square[] line : squares) {
