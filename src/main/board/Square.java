@@ -23,11 +23,16 @@ public class Square {
     public Square(String name, boolean isWhite) {
         this(name, null, isWhite);
     }
+    protected Square(Coordinate coordinate, Piece piece, boolean isWhite) {
+        this.coordinate = coordinate;
+        this.piece = piece;
+        this.isWhite = isWhite;
+    }
 
     // Factory methods
     public Square copy() {
         Piece newPiece = piece == null ? null : piece.copy();
-        return new Square(coordinate.copy().toString(), newPiece, isWhite);
+        return new Square(coordinate.copy(), newPiece, isWhite);
     }
 
     // Getters

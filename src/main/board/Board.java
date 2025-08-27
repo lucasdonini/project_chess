@@ -141,7 +141,7 @@ public class Board {
             count--;
 
             for (Square sq : row) {
-                String text = String.format("%s ", sq);
+                String text = String.format(" %s ", sq);
                 sb.append(text);
 //                if (sq.getPiece() == null) sb.append(" ");
             }
