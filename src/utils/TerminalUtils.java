@@ -5,6 +5,7 @@ import java.util.Objects;
 public class TerminalUtils {
     public static final String RED = "\u001B[1;31m";
     public static final String GREEN = "\u001B[1;32m";
+    public static final String YELLOW = "\u001B[1;33m";
     public static final String RESET = "\u001B[0m";
 
     public static String colored(String text, String ANSIColor, Object... args) {
@@ -18,5 +19,9 @@ public class TerminalUtils {
 
     public static String inGreen(String text, Object... args) {
         return colored(text, GREEN, args);
+    }
+
+    public static String inYellow(String text, Object... args) {
+        return colored(text, YELLOW, args);
     }
 }

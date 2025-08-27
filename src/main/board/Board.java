@@ -8,6 +8,7 @@ import utils.SquareUtils;
 import java.util.*;
 
 import static utils.PiecePositioningUtils.*;
+import static utils.TerminalUtils.*;
 
 public class Board {
     private final Square[][] squares;
@@ -121,8 +122,17 @@ public class Board {
         StringBuilder sb = new StringBuilder();
         int count = 8;
 
+        sb.append(" ");
+        for (int i = 0; i < 8; i++) {
+            String letter = String.valueOf((char) ('a' + i));
+            sb.append("  ");
+            sb.append(inYellow(letter));
+        }
+
+        sb.append("\n");
+
         for (Square[] row : squares) {
-            sb.append(count);
+            sb.append(inYellow(String.valueOf(count)));
             sb.append(" ");
             count--;
 
@@ -134,17 +144,10 @@ public class Board {
                     continue;
                 }
 
-                String text = String.format(" %3s ", p);
+                String text = String.format(" %s ", p);
                 sb.append(text);
             }
             sb.append('\n');
-        }
-
-        sb.append("\n ");
-        for (int i = 0; i < 8; i++) {
-            char letter = (char) ('a' + i);
-            sb.append("  ");
-            sb.append(letter);
         }
 
         return sb.toString();
