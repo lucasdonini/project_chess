@@ -15,12 +15,16 @@ public class Board {
 
     // Constructors
     public Board() {
+        int count = 1;
+
         squares = new Square[8][8];
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                squares[i][j] = new Square(SquareUtils.getName(i, j));
+                squares[i][j] = new Square(SquareUtils.getName(i, j), count % 2 == 0);
+                count++;
             }
+            count++;
         }
     }
 
@@ -137,15 +141,9 @@ public class Board {
             count--;
 
             for (Square sq : row) {
-                Piece p = sq.getPiece();
-
-                if (p == null) {
-                    sb.append(" - ");
-                    continue;
-                }
-
-                String text = String.format(" %s ", p);
+                String text = String.format("%s ", sq);
                 sb.append(text);
+//                if (sq.getPiece() == null) sb.append(" ");
             }
             sb.append('\n');
         }
