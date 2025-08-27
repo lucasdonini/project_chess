@@ -1,7 +1,9 @@
 package main.game;
 
+import utils.TerminalUtils;
+
 public enum Player {
-    BLACK("Black"),
+    BLACK(TerminalUtils.inRed("Black")),
     WHITE("White");
 
     private final String displayName;
