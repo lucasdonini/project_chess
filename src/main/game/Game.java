@@ -7,7 +7,6 @@ import main.board.Square;
 import main.pieces.Pawn;
 import main.pieces.Piece;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,17 +137,17 @@ public class Game {
         origin.setPiece(null);
     }
 
-    public boolean isMovementLegal(String origin, String destination, List<String> possibleMoves) {
+    public boolean isMovementIllegal(String origin, String destination, List<String> possibleMoves) {
         Game game = this.copy();
 
         try {
             game.move(origin, destination, possibleMoves);
 
             CheckMateController cmc = new CheckMateController(game);
-            return !cmc.isCheck() && !cmc.isCheckMate();
+            return cmc.isCheck() || cmc.isCheckMate();
 
         } catch (ImpossibleToMoveException e) {
-            return false;
+            return true;
         }
     }
 

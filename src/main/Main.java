@@ -38,7 +38,7 @@ public class Main {
                         possibleMoves::contains
                 );
 
-                if (!game.isMovementLegal(originSquareName, destinationSquareName, possibleMoves)) {
+                if (game.isMovementIllegal(originSquareName, destinationSquareName, possibleMoves)) {
                     System.out.println(inRed("Illegal movement."));
                     System.out.println("Action cancelled. Restarting turn.");
                     continue;
