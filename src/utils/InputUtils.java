@@ -16,7 +16,7 @@ public class InputUtils {
         while (true) {
             System.out.print(text);
 
-            s = sc.nextLine();
+            s = sc.nextLine().trim();
 
             final String finalS = s;
             if (Arrays.stream(validations).allMatch(v -> v.test(finalS))) {
