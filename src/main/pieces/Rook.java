@@ -2,19 +2,24 @@ package main.pieces;
 
 import main.board.Board;
 import main.board.Square;
+import utils.Coordinate;
+import utils.Move;
 import utils.SquareUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook extends Piece {
-    protected Rook(boolean isWhite, int row, int col) {
-        super(isWhite, row, col);
+import static utils.PiecePositioningUtils.blackRookCastling;
+import static utils.PiecePositioningUtils.whiteRookCastling;
+
+public class Rook extends CastlingPiece {
+    protected Rook(boolean isWhite, int row, int col, boolean wasMoved) {
+        super(isWhite, row, col, wasMoved);
     }
 
     @Override
     public Rook copy() {
-        return new Rook(isWhite, row, col);
+        return new Rook(isWhite, row, col, wasMoved);
     }
 
     @Override
@@ -91,5 +96,21 @@ public class Rook extends Piece {
     @Override
     protected String visualRep() {
         return "R";
+    }
+
+    @Override
+    public Move getCastlingMove(CastlingType type, final Board board) {
+        Move castle = (isWhite ? whiteRookCastling : blackRookCastling).get(type);
+        String position = SquareUtils.getName(row, col);
+
+        if (
+            !wasMoved &&
+            castle.origin().equals(position) &&
+            getPossibleMovements(board).contains(castle.destination())
+        ) {
+            return castle;
+        }
+
+        return null;
     }
 }

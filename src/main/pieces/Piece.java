@@ -3,10 +3,12 @@ package main.pieces;
 import main.board.Board;
 import main.game.Player;
 import utils.Coordinate;
+import utils.Move;
 import utils.SquareUtils;
 import utils.TerminalUtils;
 
 import java.util.List;
+import java.util.Map;
 
 import static utils.PiecePositioningUtils.*;
 
@@ -23,14 +25,28 @@ public abstract class Piece {
 
     // Factory methods
     // === ROOK ===
-    public static Rook rook(String square, boolean isWhite) {
+    public static Rook rook(String square, boolean isWhite, boolean wasMoved, String castlingDestination) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid square");
         }
 
         Coordinate position = SquareUtils.getCoordinate(square);
 
-        return new Rook(isWhite, position.row(), position.col());
+        return new Rook(isWhite, position.row(), position.col(), wasMoved, castlingDestination);
+    }
+
+    private static Rook initializedRook(String square, Map<CastlingType, Move> castlings) {
+        CastlingType castlingType = castlings.keySet().stream()
+                .filter(t -> castlings.get(t).origin().equals(square))
+                .findFirst().orElse(null);
+
+        if (castlingType == null) {
+            throw new RuntimeException("Something went wrong setting the castling destination");
+        }
+
+        String castlingDestination = castlings.get(castlingType).destination();
+
+        return rook(square, false, false, castlingDestination);
     }
 
     public static Rook whiteRook(String square) {
@@ -38,7 +54,7 @@ public abstract class Piece {
             throw new IllegalArgumentException("Invalid initial white rook position");
         }
 
-        return rook(square, true);
+        return initializedRook(square, whiteKingCastling);
     }
 
     public static Rook blackRook(String square) {
@@ -46,7 +62,7 @@ public abstract class Piece {
             throw new IllegalArgumentException("Invalid initial black rook position");
         }
 
-        return rook(square, false);
+        return initializedRook(square, blackKingCastling);
     }
 
     // === KNIGHT ===
@@ -123,22 +139,22 @@ public abstract class Piece {
     }
 
     // === KING ===
-    public static King king(String square, boolean isWhite) {
+    public static King king(String square, boolean isWhite, boolean wasMoved) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid position");
         }
 
         Coordinate position = SquareUtils.getCoordinate(square);
 
-        return new King(isWhite, position.row(), position.col());
+        return new King(isWhite, position.row(), position.col(), wasMoved);
     }
 
     public static King whiteKing() {
-        return king(whiteKingSquare, true);
+        return king(whiteKingSquare, true, false);
     }
 
     public static King blackKing() {
-        return king(blackKingSquare, false);
+        return king(blackKingSquare, false, false);
     }
 
     // === PAWN ===

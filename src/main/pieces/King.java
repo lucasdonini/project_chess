@@ -2,19 +2,22 @@ package main.pieces;
 
 import main.board.Board;
 import main.board.Square;
+import utils.Move;
 import utils.SquareUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class King extends Piece {
-    protected King(boolean isWhite, int row, int col) {
-        super(isWhite, row, col);
+import static utils.PiecePositioningUtils.*;
+
+public class King extends CastlingPiece {
+    protected King(boolean isWhite, int row, int col, boolean wasMoved) {
+        super(isWhite, row, col, wasMoved);
     }
 
     @Override
     public King copy() {
-        return new King(isWhite, row, col);
+        return new King(isWhite, row, col, wasMoved);
     }
 
     @Override
@@ -50,5 +53,18 @@ public class King extends Piece {
     @Override
     protected String visualRep() {
         return "K";
+    }
+
+    @Override
+    public Move getCastlingMove(CastlingType type, final Board board) {
+        Move castle = (isWhite ? whiteKingCastling : blackKingCastling).get(type);
+        String position = SquareUtils.getName(row, col);
+        Square destination = board.getSquare(castle.destination());
+
+        if (!wasMoved && castle.origin().equals(position) && destination.isFree()) {
+            return castle;
+        }
+
+        return null;
     }
 }
