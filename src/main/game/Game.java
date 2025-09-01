@@ -20,6 +20,7 @@ public class Game {
     protected Player player;
     protected Player winner;
     protected int turnCount;
+    protected Piece selection;
 
     protected Map<Player, List<Piece>> piecesPerPlayer;
 
@@ -174,7 +175,7 @@ public class Game {
             case QUEEN -> Piece::queen;
             case KNIGHT -> Piece::knight;
             case BISHOP -> Piece::bishop;
-            case ROOK -> Piece::rook;
+            case ROOK -> ((sq, isWhite) -> Piece.rook(sq, isWhite, true));
             default -> null;
         };
 

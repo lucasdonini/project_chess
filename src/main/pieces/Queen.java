@@ -19,7 +19,7 @@ public class Queen extends Piece {
         List<String> squares = new ArrayList<>();
 
         squares.addAll(bishop(getSquare(), isWhite).getPossibleMovements(board));
-        squares.addAll(rook(getSquare(), isWhite).getPossibleMovements(board));
+        squares.addAll(rook(getSquare(), isWhite, true).getPossibleMovements(board));
 
         return squares.stream().distinct().toList();
     }

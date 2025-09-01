@@ -25,28 +25,14 @@ public abstract class Piece {
 
     // Factory methods
     // === ROOK ===
-    public static Rook rook(String square, boolean isWhite, boolean wasMoved, String castlingDestination) {
+    public static Rook rook(String square, boolean isWhite, boolean wasMoved) {
         if (!SquareUtils.isValid(square)) {
             throw new IllegalArgumentException("Invalid square");
         }
 
         Coordinate position = SquareUtils.getCoordinate(square);
 
-        return new Rook(isWhite, position.row(), position.col(), wasMoved, castlingDestination);
-    }
-
-    private static Rook initializedRook(String square, Map<CastlingType, Move> castlings) {
-        CastlingType castlingType = castlings.keySet().stream()
-                .filter(t -> castlings.get(t).origin().equals(square))
-                .findFirst().orElse(null);
-
-        if (castlingType == null) {
-            throw new RuntimeException("Something went wrong setting the castling destination");
-        }
-
-        String castlingDestination = castlings.get(castlingType).destination();
-
-        return rook(square, false, false, castlingDestination);
+        return new Rook(isWhite, position.row(), position.col(), wasMoved);
     }
 
     public static Rook whiteRook(String square) {
@@ -54,7 +40,7 @@ public abstract class Piece {
             throw new IllegalArgumentException("Invalid initial white rook position");
         }
 
-        return initializedRook(square, whiteKingCastling);
+        return rook(square, true, false);
     }
 
     public static Rook blackRook(String square) {
@@ -62,7 +48,7 @@ public abstract class Piece {
             throw new IllegalArgumentException("Invalid initial black rook position");
         }
 
-        return initializedRook(square, blackKingCastling);
+        return rook(square, false, false);
     }
 
     // === KNIGHT ===
